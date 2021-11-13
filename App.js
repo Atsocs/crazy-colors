@@ -1,21 +1,31 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from "react";
+import { View, Text } from "react-native";
+import NumberGrid from "./Number";
+import Controls from "./Controls";
 
 export default function App() {
+  const [rows, setRows] = useState(2);
+  const [cols, setCols] = useState(2);
+  const [mod, setMod] = useState(2);
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+    <View style={{ flex: 1 }}>
+      <NumberGrid
+        style={{ flex: 3 }}
+        rows={rows}
+        cols={cols}
+        MOD={mod}
+        onSuccess={(steps) => alert(`You won in ${steps} steps`)}
+      />
+      <Text style={{ textAlign: "center", backgroundColor: "yellow" }}>
+        try to make all rectangles have the same color
+      </Text>
+      <Controls
+        style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+        setRows={setRows}
+        setCols={setCols}
+        setMod={setMod}
+      />
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
