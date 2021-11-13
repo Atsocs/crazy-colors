@@ -47,16 +47,14 @@ export default function App() {
         cols={cols}
         MOD={mod}
         onSuccess={(steps) => {
+          const title = `Congratulations!`;
+          const message = `You won in ${steps} press${steps > 1 ? "es" : ""}.`;
           if (Platform.OS === "android") {
-            Alert.alert(
-              `Congratulations!`,
-              `You won in ${steps} press${steps > 1 ? "es" : ""}`
-            );
+            Alert.alert(title, message);
           }
           if (Platform.OS === "web") {
             alert(
-              `Congratulations!` +
-                `You won in ${steps} press${steps > 1 ? "es" : ""}`
+              `${title} ${message}`
             );
           }
         }}
