@@ -6,25 +6,21 @@ function MySlider({ onValueChange }) {
   return (
     <Slider
       onValueChange={onValueChange}
-      style={{ width: 200, height: 40 }}
+      style={{ width: "100%" }}
       minimumValue={2}
       maximumValue={10}
       step={1}
-      minimumTrackTintColor="red"
-      maximumTrackTintColor="#000000"
+      minimumTrackTintColor="white"
+      maximumTrackTintColor="white"
+      thumbTintColor="white"
     />
   );
 }
 
-export default function Controls({ setRows, setCols, setMod, style }) {
+export default function Controls({ setLevel, style }) {
   return (
     <View style={style}>
-      <Text>number of rows</Text>
-      <MySlider onValueChange={(value) => setRows(value) && newPuzzle()} />
-      <Text>number of columns</Text>
-      <MySlider onValueChange={(value) => setCols(value) && newPuzzle()} />
-      <Text>mod</Text>
-      <MySlider onValueChange={(value) => setMod(value) && newPuzzle()} />
+      <MySlider onValueChange={(value) => setLevel(value) && newPuzzle()} />
     </View>
   );
 }

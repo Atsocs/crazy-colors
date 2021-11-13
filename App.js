@@ -1,31 +1,86 @@
 import React, { useState } from "react";
-import { View, Text } from "react-native";
+import {
+  View,
+  Text,
+  Platform,
+  StatusBar,
+  StyleSheet,
+  TouchableOpacity,
+  Alert,
+} from "react-native";
 import NumberGrid from "./Number";
 import Controls from "./Controls";
 
 export default function App() {
-  const [rows, setRows] = useState(2);
-  const [cols, setCols] = useState(2);
-  const [mod, setMod] = useState(2);
+  const [level, setLevel] = useState(2);
+  const [numbered, setNumbered] = useState(false);
+  const rows = level;
+  const cols = level;
+  const mod = level;
 
   return (
-    <View style={{ flex: 1 }}>
+    <View
+      style={{
+        flex: 1,
+        alignItems: "stretch",
+        justifyContent: "center",
+        paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+      }}
+    >
+      <TouchableOpacity
+        activeOpacity={1}
+        onPress={() => {
+          setNumbered(!numbered);
+        }}
+      >
+        <Text style={styles.text}>
+          Press the rectangles to change color in column &#38; row
+        </Text>
+        <Text style={styles.text}>
+          Try to make them all have the same color!
+        </Text>
+      </TouchableOpacity>
       <NumberGrid
-        style={{ flex: 3 }}
+        numbered={numbered}
+        style={{ flex: 12 }}
         rows={rows}
         cols={cols}
         MOD={mod}
-        onSuccess={(steps) => alert(`You won in ${steps} steps`)}
+        onSuccess={(steps) => {
+          if (Platform.OS === "android") {
+            Alert.alert(
+              `Congratulations!`,
+              `You won in ${steps} press${steps > 1 ? "es" : ""}`
+            );
+          }
+          if (Platform.OS === "web") {
+            alert(
+              `Congratulations!` +
+                `You won in ${steps} press${steps > 1 ? "es" : ""}`
+            );
+          }
+        }}
       />
-      <Text style={{ textAlign: "center", backgroundColor: "yellow" }}>
-        try to make all rectangles have the same color
-      </Text>
+      <Text style={styles.text}>&#8592; Easier / Harder &#8594;</Text>
       <Controls
-        style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
-        setRows={setRows}
-        setCols={setCols}
-        setMod={setMod}
+        style={{
+          flex: 1,
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: "#333",
+        }}
+        setLevel={setLevel}
       />
     </View>
   );
 }
+
+let styles = StyleSheet.create({
+  text: {
+    textAlign: "center",
+    backgroundColor: "yellow",
+    backgroundColor: "#333",
+    color: "#ccc",
+    fontSize: 16,
+  },
+});
